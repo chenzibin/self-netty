@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 /**
  * FileChannelDemo
@@ -43,6 +45,23 @@ public class FileChannelDemo {
 			FileChannel outChannel = fos.getChannel()) {
 			inChannel.transferTo(0, inChannel.size(),  outChannel);
 //			outChannel.transferFrom(inChannel, 0, inChannel.size());
+		}
+	}
+
+	@Test
+	public void test() {
+		String jarFilePath = "src/main/resources/file/log-app-1.0.0-SNAPSHOT.jar";
+
+		try (JarInputStream input = new JarInputStream(new FileInputStream(jarFilePath))) {
+
+			JarEntry entry = null;
+			while ((entry = input.getNextJarEntry()) != null) {
+				if ("jar_info.json".equals(entry.getName())) {
+
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
