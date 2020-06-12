@@ -1,5 +1,9 @@
 package self.netty.base.nio.ftp;
 
+import org.junit.Test;
+
+import java.util.*;
+
 /**
  * FtpDemo
  *
@@ -8,6 +12,10 @@ package self.netty.base.nio.ftp;
  */
 public class FtpDemo {
 
+	/**
+	 * 支持上传、下载、文件列表、断点续传
+	 */
+	@Test
 	public void test() {
 
 	}
