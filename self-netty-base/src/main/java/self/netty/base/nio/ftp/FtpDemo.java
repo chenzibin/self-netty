@@ -1,8 +1,9 @@
 package self.netty.base.nio.ftp;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.io.IOException;
 
 /**
  * FtpDemo
@@ -12,11 +13,14 @@ import java.util.*;
  */
 public class FtpDemo {
 
-	/**
-	 * 支持上传、下载、文件列表、断点续传
-	 */
 	@Test
-	public void test() {
+	public void test() throws IOException {
+		FtpClient client = new FtpClient();
+		client.connect("localhost", 8999);
+		client.upload("C:\\Users\\chenzb\\Downloads\\UDAP-2191.zip");
+	}
+
+	public void update() {
 
 	}
 }

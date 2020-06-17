@@ -43,8 +43,10 @@ public class SocketChannelDemo {
     @Test
     public void serverSocket() throws IOException {
         try (ServerSocketChannel serverChannel = ServerSocketChannel.open();
-        SocketChannel channel = serverChannel.accept()) {
-            channel.configureBlocking(false);
+       ) {
+            serverChannel.bind(new InetSocketAddress("localhost", 8999));
+            serverChannel.configureBlocking(false);
+            SocketChannel channel = serverChannel.accept();
             while (!channel.finishConnect()) {
             }
 
