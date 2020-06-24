@@ -36,12 +36,15 @@ public class FtpServer {
 			 ServerSocketChannel serverChannel = ServerSocketChannel.open()) {
 			serverChannel.configureBlocking(false);
 			serverChannel.bind(new InetSocketAddress(ip, port));
-			serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+			SelectionKey sk = serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+			sk.attach(new AcceptHandler(selector, serverChannel));
 			while (selector.select() > 0) {
 				Iterator<SelectionKey> selectionKeys = selector.selectedKeys().iterator();
 				while (selectionKeys.hasNext()) {
 					SelectionKey selectionKey = selectionKeys.next();
 					if (selectionKey.isAcceptable()) {
+						Runnable runnable = (Runnable) selectionKey.attachment();
+						runnable.run();
 						ServerSocketChannel channel = (ServerSocketChannel) selectionKey.channel();
 						SocketChannel socketChannel = channel.accept();
 						socketChannel.configureBlocking(false);
@@ -61,12 +64,35 @@ public class FtpServer {
 					} else if (selectionKey.isWritable()) {
 						SocketChannel channel = (SocketChannel) selectionKey.channel();
 //						channel.write()
+
 					}
 					selectionKeys.remove();
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	class AcceptHandler implements Runnable {
+
+		private Selector selector;
+		private ServerSocketChannel serverChannel;
+
+		public AcceptHandler(Selector selector, ServerSocketChannel serverChannel) {
+			this.selector = selector;
+			this.serverChannel = serverChannel;
+		}
+
+		@Override
+		public void run() {
+			ServerSocketChannel channel = (ServerSocketChannel) selectionKey.channel();
+			try (SocketChannel socketChannel = channel.accept()) {
+				socketChannel.configureBlocking(false);
+				socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
