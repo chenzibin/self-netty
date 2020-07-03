@@ -1,5 +1,6 @@
-package self.netty.base.nio.ftp;
+package self.netty.base.nio.ftp.single;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -42,30 +43,8 @@ public class FtpServer {
 				Iterator<SelectionKey> selectionKeys = selector.selectedKeys().iterator();
 				while (selectionKeys.hasNext()) {
 					SelectionKey selectionKey = selectionKeys.next();
-					if (selectionKey.isAcceptable()) {
-						Runnable runnable = (Runnable) selectionKey.attachment();
-						runnable.run();
-						ServerSocketChannel channel = (ServerSocketChannel) selectionKey.channel();
-						SocketChannel socketChannel = channel.accept();
-						socketChannel.configureBlocking(false);
-						socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-					} else if (selectionKey.isReadable()) {
-						String tempFileName = FTP_TEMP_DIR + System.currentTimeMillis();
-						try (SocketChannel channel = (SocketChannel) selectionKey.channel();
-							 FileChannel tempFileChannel = new FileOutputStream(tempFileName).getChannel()) {
-							ByteBuffer buffer = ByteBuffer.allocate(1024);
-							while (channel.read(buffer) > 0) {
-								buffer.flip();
-								tempFileChannel.write(buffer);
-								buffer.clear();
-							}
-						}
-
-					} else if (selectionKey.isWritable()) {
-						SocketChannel channel = (SocketChannel) selectionKey.channel();
-//						channel.write()
-
-					}
+					Runnable runnable = (Runnable) selectionKey.attachment();
+					runnable.run();
 					selectionKeys.remove();
 				}
 			}
@@ -86,10 +65,36 @@ public class FtpServer {
 
 		@Override
 		public void run() {
-			ServerSocketChannel channel = (ServerSocketChannel) selectionKey.channel();
-			try (SocketChannel socketChannel = channel.accept()) {
+			try (SocketChannel socketChannel = serverChannel.accept()) {
 				socketChannel.configureBlocking(false);
-				socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+				SelectionKey sk = socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+				sk.attach(new IOHandler(selector, socketChannel));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	class IOHandler implements Runnable {
+
+		private Selector selector;
+		private SocketChannel socketChannel;
+
+		public IOHandler(Selector selector, SocketChannel socketChannel) {
+			this.selector = selector;
+			this.socketChannel = socketChannel;
+		}
+
+		@Override
+		public void run() {
+			String tempFileName = FTP_TEMP_DIR + System.currentTimeMillis();
+			try (FileChannel tempFileChannel = new FileOutputStream(tempFileName).getChannel()) {
+				ByteBuffer buffer = ByteBuffer.allocate(1024);
+				while (socketChannel.read(buffer) > 0) {
+					buffer.flip();
+					tempFileChannel.write(buffer);
+					buffer.clear();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

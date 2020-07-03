@@ -1,4 +1,4 @@
-package self.netty.base.nio.ftp;
+package self.netty.base.nio.ftp.single;
 
 import java.io.*;
 import java.net.InetSocketAddress;

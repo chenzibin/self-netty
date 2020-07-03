@@ -1,6 +1,5 @@
-package self.netty.base.nio.ftp;
+package self.netty.base.nio.ftp.single;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
