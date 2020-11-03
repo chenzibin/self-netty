@@ -38,5 +38,10 @@ public class ServerBootstrap {
 			throw new  NullPointerException("channel class");
 		}
 		this.channelClass = channelClass;
+		return this;
+	}
+
+	public ServerBootstrap bind(int port) {
+		
 	}
 }
