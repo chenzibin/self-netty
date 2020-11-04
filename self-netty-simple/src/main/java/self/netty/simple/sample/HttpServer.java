@@ -1,7 +1,9 @@
 package self.netty.simple.sample;
 
 import self.netty.simple.bootstrap.ServerBootstrap;
+import self.netty.simple.channel.ChannelInitializer;
 import self.netty.simple.channel.NioServerSocketChannel;
+import self.netty.simple.channel.NioSocketChannel;
 import self.netty.simple.eventloop.NioEventLoopGroup;
 
 /**
@@ -20,17 +22,12 @@ public class HttpServer {
 				.channel(NioServerSocketChannel.class)
 				.childHandler(new ChannelInitializer<NioSocketChannel>() {
 					@Override
-					protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
-
+					public void initChannel(NioSocketChannel channel) throws Exception {
+						channel.pipieline()
+								.addLast(new HttpServerCodec());
 					}
 				})
 				.bind(8000)
-				.addListener(future -> {
-					if (future.isSuccess()) {
-						System.out.println("success");
-					} else {
-						System.out.println("fail");
-					}
-				});
+				;
 	}
 }
