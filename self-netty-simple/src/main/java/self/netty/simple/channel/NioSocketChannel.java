@@ -9,6 +9,6 @@ package self.netty.simple.channel;
 public class NioSocketChannel {
 
 	public ChannelPipeline pipieline() {
-		return
+		return new ChannelPipeline();
 	}
 }
