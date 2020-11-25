@@ -1,10 +1,10 @@
-package self.netty.simple.sample;
+package self.netty.code.sample;
 
-import self.netty.simple.bootstrap.ServerBootstrap;
-import self.netty.simple.channel.ChannelInitializer;
-import self.netty.simple.channel.NioServerSocketChannel;
-import self.netty.simple.channel.NioSocketChannel;
-import self.netty.simple.eventloop.NioEventLoopGroup;
+import self.netty.code.bootstrap.ServerBootstrap;
+import self.netty.code.channel.ChannelInitializer;
+import self.netty.code.channel.NioServerSocketChannel;
+import self.netty.code.channel.NioSocketChannel;
+import self.netty.code.eventloop.NioEventLoopGroup;
 
 /**
  * HttpServer

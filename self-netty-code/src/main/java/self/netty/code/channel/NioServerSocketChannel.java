@@ -1,4 +1,4 @@
-package self.netty.simple.channel;
+package self.netty.code.channel;
 
 import java.nio.channels.SelectableChannel;
 

@@ -1,7 +1,6 @@
 package self.netty.base.nio.future;
 
 import com.google.common.util.concurrent.*;
-import io.netty.channel.ChannelFuture;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;

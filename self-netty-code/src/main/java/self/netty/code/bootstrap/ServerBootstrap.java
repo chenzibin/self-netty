@@ -1,10 +1,9 @@
-package self.netty.simple.bootstrap;
+package self.netty.code.bootstrap;
 
-import self.netty.simple.channel.ChannelHandler;
-import self.netty.simple.channel.NioServerSocketChannel;
-import self.netty.simple.eventloop.NioEventLoopGroup;
+import self.netty.code.channel.ChannelHandler;
+import self.netty.code.channel.NioServerSocketChannel;
+import self.netty.code.eventloop.NioEventLoopGroup;
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
@@ -14,12 +13,18 @@ import java.net.SocketAddress;
  * @author chenzb
  * @date 2020/11/3
  */
-public class ServerBootstrap {
+public class ServerBootstrap extends AbstractBootstrap {
 
 	private NioEventLoopGroup boss;
 	private NioEventLoopGroup worker;
 	private Class<NioServerSocketChannel> channelClass;
 	private ChannelHandler channelHandler;
+
+	public ServerBootstrap(Bootstrap bootstrap) {
+	}
+
+	public ServerBootstrap(ServerBootstrap serverBootstrap) {
+	}
 
 	public ServerBootstrap group(NioEventLoopGroup boss, NioEventLoopGroup worker) {
 		inspectNPE(boss, "boss group");
@@ -68,5 +73,10 @@ public class ServerBootstrap {
 		if (subject == null) {
 			throw new NullPointerException(name);
 		}
+	}
+
+	@Override
+	public Object clone() {
+		return new ServerBootstrap(this);
 	}
 }

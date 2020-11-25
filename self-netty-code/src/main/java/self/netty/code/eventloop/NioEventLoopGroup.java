@@ -1,4 +1,4 @@
-package self.netty.simple.eventloop;
+package self.netty.code.eventloop;
 
 /**
  * NioEventLoopGroup

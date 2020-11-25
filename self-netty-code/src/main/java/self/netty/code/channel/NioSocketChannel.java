@@ -1,4 +1,4 @@
-package self.netty.simple.channel;
+package self.netty.code.channel;
 
 /**
  * NioSocketChannel
@@ -8,7 +8,7 @@ package self.netty.simple.channel;
  */
 public class NioSocketChannel {
 
-	public ChannelPipeline pipieline() {
+	public ChannelPipeline pipeline() {
 		return new ChannelPipeline();
 	}
 }
