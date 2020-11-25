@@ -21,10 +21,8 @@ public class HttpServer {
 		bootstrap.group(boss, worker)
 				.channel(NioServerSocketChannel.class)
 				.childHandler(new ChannelInitializer<NioSocketChannel>() {
-					@Override
 					public void initChannel(NioSocketChannel channel) throws Exception {
-						channel.pipieline()
-								.addLast(new HttpServerCodec());
+
 					}
 				})
 				.bind(8000)

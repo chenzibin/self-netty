@@ -10,8 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>self-netty-base</module>
-        <module>self-netty-demo</module>
         <module>self-netty-simple</module>
+        <module>self-netty-sample</module>
+        <module>self-netty-im</module>
     </modules>
 
 </project>
