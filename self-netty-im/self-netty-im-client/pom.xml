@@ -11,6 +11,11 @@
 
     <artifactId>self-netty-im-client</artifactId>
 
-    即时通讯
+    <dependencies>
+        <dependency>
+            <groupId>self.netty</groupId>
+            <artifactId>self-netty-im-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

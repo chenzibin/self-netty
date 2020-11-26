@@ -21,6 +21,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>self.netty</groupId>
+            <artifactId>self-netty-im-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
