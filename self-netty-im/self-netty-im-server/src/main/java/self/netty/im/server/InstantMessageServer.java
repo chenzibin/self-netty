@@ -1,11 +1,14 @@
 package self.netty.im.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.EventExecutorGroup;
+
+import java.nio.charset.Charset;
 
 /**
  * InstantMessageServer
@@ -31,6 +34,12 @@ public class InstantMessageServer {
 				.bind(8000);
 	}
 
-	private static class MyServerHandler implements ChannelInboundHandler {
+	private static class MyServerHandler extends ChannelInboundHandlerAdapter {
+
+		@Override
+		public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+			ByteBuf byteBuf = (ByteBuf) msg;
+			System.out.println(byteBuf.toString(Charset.defaultCharset()));
+		}
 	}
 }

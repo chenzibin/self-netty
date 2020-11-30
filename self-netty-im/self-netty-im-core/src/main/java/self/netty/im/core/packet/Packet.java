@@ -8,6 +8,8 @@ package self.netty.im.core.packet;
  */
 public class Packet {
 
-	private byte[] magic;
+	private short magic;
 	private byte version = 0;
+	private byte serializer;
+	private byte command;
 }
