@@ -6,7 +6,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.concurrent.EventExecutorGroup;
+import self.netty.im.core.packet.codec.PacketDecoder;
+import self.netty.im.core.packet.codec.PacketEncoder;
 
 import java.nio.charset.Charset;
 
@@ -28,7 +31,9 @@ public class InstantMessageServer {
 					@Override
 					protected void initChannel(NioSocketChannel ch) throws Exception {
 						ch.pipeline()
-								.addLast(new MyServerHandler());
+								.addLast(new LengthFieldBasedFrameDecoder(Short.MAX_VALUE, 5, 2))
+								.addLast(new PacketDecoder())
+								.addLast(new PacketEncoder());
 					}
 				})
 				.bind(8000);
