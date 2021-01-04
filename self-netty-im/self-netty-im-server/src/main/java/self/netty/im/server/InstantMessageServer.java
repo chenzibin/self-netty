@@ -38,13 +38,4 @@ public class InstantMessageServer {
 				})
 				.bind(8000);
 	}
-
-	private static class MyServerHandler extends ChannelInboundHandlerAdapter {
-
-		@Override
-		public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-			ByteBuf byteBuf = (ByteBuf) msg;
-			System.out.println(byteBuf.toString(Charset.defaultCharset()));
-		}
-	}
 }

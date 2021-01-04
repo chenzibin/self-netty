@@ -34,14 +34,4 @@ public class InstantMessageClient {
 				})
 				.connect("localhost", 8000);
 	}
-
-	private static class MyClientHandler extends ChannelInboundHandlerAdapter {
-
-		@Override
-		public void channelActive(ChannelHandlerContext ctx) throws Exception {
-			ByteBuf byteBuf = ctx.alloc().buffer();
-			byteBuf.writeBytes("你好，neety!".getBytes());
-			ctx.channel().writeAndFlush(byteBuf);
-		}
-	}
 }
